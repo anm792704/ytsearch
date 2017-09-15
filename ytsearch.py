@@ -10,17 +10,17 @@ from oauth2client.tools import argparser, run_flow
 
 class YTChannel():
     def main():
-        parser = argparse.ArgumentParser(description='Search youtube Videos by Title, Description and/or Raw Filename')
+        parser = argparse.ArgumentParser(description='Search youtube Videos by Title, Description')
         parser.add_argument("-t", "--title", help="pattern to search for in title", type=str)
-        parser.add_argument("-d", "--description", help="pattern to search for in description", type=str)
-        parser.add_argument("-f", "--file", help="pattern to search for in raw filename", type=str)
+        parser.add_argument("-d1", "--description1", help="pattern to search for in description", type=str)
+        parser.add_argument("-d2", "--description2", help="additional pattern to search for in description", type=str)
         args = parser.parse_args()
         if args.title:
             print ("title to search for <" + args.title + ">")
-        if args.description:
-            print ("description to search for <" + args.description + ">")
-        if args.file:
-            print ("title to search for <" + args.file + ">")
+        if args.description1:
+            print ("description1 to search for <" + args.description1 + ">")
+        if args.description2:
+            print ("description2 to search for <" + args.description2 + ">")
 
 
         # The CLIENT_SECRETS_FILE variable specifies the name of a file that contains
@@ -125,24 +125,40 @@ class YTChannel():
             playlist_item_idx = 0
             while playlist_item_idx < len(results['items']):
                 video_title_lower = results['items'][playlist_item_idx]['snippet']['title'].lower()
-                video_description_lower = results['items'][playlist_item_idx]['snippet']['description'].lower()
+                video_description1_lower = results['items'][playlist_item_idx]['snippet']['description'].lower()
+                video_description2_lower = results['items'][playlist_item_idx]['snippet']['description'].lower()
 
                 if args.title is not None:
                     search_title_lower = args.title.lower()
                     if (search_title_lower in video_title_lower):
-                        if args.description is not None:
-                            search_description_lower = args.description.lower()
-                            if (search_description_lower in video_description_lower):
-                                print("Title: " + results['items'][playlist_item_idx]['snippet']['title'])
-                                print("Description " + results['items'][playlist_item_idx]['snippet']['description'])
+                        if args.description1 is not None:
+                            search_description1_lower = args.description1.lower()
+                            if (search_description1_lower in video_description1_lower):
+                                if args.description2 is not None:
+                                    search_description2_lower = args.description2.lower()
+                                    if (search_description2_lower in video_description2_lower):
+                                        print("Title: " + results['items'][playlist_item_idx]['snippet']['title'])
+                                        print("Description " + results['items'][playlist_item_idx]['snippet'][
+                                            'description'])
+                                else:
+                                    print("Title: " + results['items'][playlist_item_idx]['snippet']['title'])
+                                    print("Description " + results['items'][playlist_item_idx]['snippet']['description'])
                         else:
                             print("Title: " + results['items'][playlist_item_idx]['snippet']['title'])
-                else:
-                    if args.description is not None:
-                        search_description_lower = args.description.lower()
-                        if (search_description_lower in video_description_lower):
-                            print("Title: " + results['items'][playlist_item_idx]['snippet']['title'])
                             print("Description " + results['items'][playlist_item_idx]['snippet']['description'])
+                else:
+                    if args.description1 is not None:
+                        search_description1_lower = args.description1.lower()
+                        if (search_description1_lower in video_description1_lower):
+                            if args.description2 is not None:
+                                search_description2_lower = args.description2.lower()
+                                if (search_description2_lower in video_description2_lower):
+                                    print("Title: " + results['items'][playlist_item_idx]['snippet']['title'])
+                                    print("Description " + results['items'][playlist_item_idx]['snippet'][
+                                        'description'])
+                            else:
+                                print("Title: " + results['items'][playlist_item_idx]['snippet']['title'])
+                                print("Description " + results['items'][playlist_item_idx]['snippet']['description'])
                 playlist_item_idx = playlist_item_idx + 1
 
         def playlists_list_by_channel_id(service, **kwargs):
