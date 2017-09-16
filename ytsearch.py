@@ -113,13 +113,13 @@ class YTChannel():
 
         # def print_results(results):
         #     print(results)
-
+-
         def print_results(results, playlist_item_idx):
             print("---------- START ----------")
             print("Title: " + results['items'][playlist_item_idx]['snippet']['title'])
             print("Description: " + results['items'][playlist_item_idx]['snippet']['description'])
             print("URL: " + "https://youtube.com/watch?v=" + results['items'][playlist_item_idx]['snippet']['resourceId']['videoId'])
-            print("---------- ENDE ----------")
+            print("---------- ENDE -----------")
 
         def playlist_items_list_by_playlist_id(service, **kwargs):
             kwargs = remove_empty_kwargs(**kwargs)  # See full sample for function
