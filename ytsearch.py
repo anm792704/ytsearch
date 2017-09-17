@@ -132,18 +132,17 @@ class YTChannel():
             playlist_item_idx = 0
             while playlist_item_idx < len(results['items']):
                 video_title_lower = results['items'][playlist_item_idx]['snippet']['title'].lower()
-                video_description1_lower = results['items'][playlist_item_idx]['snippet']['description'].lower()
-                video_description2_lower = results['items'][playlist_item_idx]['snippet']['description'].lower()
+                video_description_lower = results['items'][playlist_item_idx]['snippet']['description'].lower()
 
                 if args.title is not None:
                     search_title_lower = args.title.lower()
                     if (search_title_lower in video_title_lower):
                         if args.description1 is not None:
                             search_description1_lower = args.description1.lower()
-                            if (search_description1_lower in video_description1_lower):
+                            if (search_description1_lower in video_description_lower):
                                 if args.description2 is not None:
                                     search_description2_lower = args.description2.lower()
-                                    if (search_description2_lower in video_description2_lower):
+                                    if (search_description2_lower in video_description_lower):
                                         print_results(results, playlist_item_idx)
                                 else:
                                     print_results(results, playlist_item_idx)
@@ -152,10 +151,10 @@ class YTChannel():
                 else:
                     if args.description1 is not None:
                         search_description1_lower = args.description1.lower()
-                        if (search_description1_lower in video_description1_lower):
+                        if (search_description1_lower in video_description_lower):
                             if args.description2 is not None:
                                 search_description2_lower = args.description2.lower()
-                                if (search_description2_lower in video_description2_lower):
+                                if (search_description2_lower in video_description_lower):
                                     print_results(results, playlist_item_idx)
                             else:
                                 print_results(results, playlist_item_idx)
